@@ -14,7 +14,6 @@ spec:
           paths:
             - path: /
               pathType: ImplementationSpecific
-
     # Kubernetes Service settings
     service:
       enabled: true
