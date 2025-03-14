@@ -21,5 +21,5 @@ spec:
   upgrade:
     crds: CreateReplace
   valuesFrom:
-    - kind: ConfigMap.  # 5
+    - kind: ConfigMap  # 5
       name: metallb-values  # 5
