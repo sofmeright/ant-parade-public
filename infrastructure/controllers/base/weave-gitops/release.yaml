@@ -30,3 +30,7 @@ spec:
       readOnlyRootFilesystem: true
       runAsNonRoot: true
       runAsUser: 1000
+    service:
+      enabled: true
+      annotations: {}
+      type: LoadBalancer
