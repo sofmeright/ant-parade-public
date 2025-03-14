@@ -10,7 +10,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./infrastructure/controllers/production
+  path: ./infrastructure/controllers/overlays/production
   prune: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -27,5 +27,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./infrastructure/configs/production
+  path: ./infrastructure/configs/overlays/production
   prune: true
