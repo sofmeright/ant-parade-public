@@ -1,4 +1,4 @@
 # Ant_Parade-Public
+This repository is responsible for *deployment* of **Kubernetes** Environments and Workloads that are actively managed by SoFMeRight.
 
-## Deployment Lifeline:
-This repository is meant to be used for my deployment of my kubernetes cluster! And other  additional resources as well!
+This repository is public space, however it is not a product. As such you can depend on its availability on some level as this code is slotted to become essential to SoFMeRight's homelab. However the code contained within this repository is without warranty, you are welcome to raise issues to me if you wish; no guarantee of any outcome as a result of this however. I like having a tidy lab, it is likely I will address any issue. But this is personal as such it is very personal and subject to my final decision the future of this repo. That being said if you the person reading this so happen not to be SoFMeRight or internal to PrPlanIT, we don't mean to scare you away! WELCOME to SoFMeRight's K8s lab ~ WIP! Hope you enjoy your stay! 👋🏽
