@@ -37,7 +37,7 @@
   tasks:
     - name: Copying ssh public key to remote host.
       authorized_key:
-        user: "<your_user>"
+        user: "{{ ansible_ssh_user }}"
         state: present
         key: "{{ lookup('file', item) }}"
       with_fileglob:
