@@ -33,4 +33,4 @@
       authorized_key:
         user: "{{ ansible_user }}"
         state: present
-        key: "/home/{{ ansible_ssh_host }}/.ssh/id_rsa.pub"
+        key: "/home/{{ ansible_ssh_user }}/.ssh/id_rsa.pub"
