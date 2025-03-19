@@ -14,6 +14,10 @@
 
 - name: Add hosts fingerprints
   hosts: linux
+  remote_user: sudo_user
+  become: true
+  become_method: sudo
+  become_user: {{ ansible_user_id }}
   tasks:
     - name: loop over hosts and append to known_hosts
       shell:
@@ -22,6 +26,10 @@
 
 - name: Prepare host(s) for Ansible usage
   hosts: linux
+  remote_user: sudo_user
+  become: true
+  become_method: sudo
+  become_user: {{ ansible_user_id }}
   gather_facts: no
 
   tasks:
