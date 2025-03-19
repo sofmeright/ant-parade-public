@@ -18,6 +18,10 @@
   hosts: localhost
   connection: local
   gather_facts: yes
+  remote_user: "{{ ansible_ssh_user }}"
+  become: true
+  become_method: sudo
+  become_user: root
   tasks:
     - name: Generate SSH key
       user:
@@ -27,6 +31,10 @@
 - name: Prepare localhost for Ansible usage 2/3 - Add pubkey to remote node.
   hosts: linux
   gather_facts: no
+  remote_user: "{{ ansible_ssh_user }}"
+  become: true
+  become_method: sudo
+  become_user: root
   tasks:
     - name: Set authorized key on remote
       authorized_key:
