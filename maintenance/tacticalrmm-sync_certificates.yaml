@@ -2,7 +2,11 @@
 - hosts: cell-membrane,moor
   name: Playbook to transfer certificates for *.prplanit.com from cell-membrane to moor for tactical-rmm.
   become: true
-  user: kai
+  user: "{{ ansible_ssh_user }}"
+  become: true
+  become_method: sudo
+  become_user: root
+
   tasks:
     - name: Transfer fullchain.pem from from cell-membrane to master
       run_once: yes
