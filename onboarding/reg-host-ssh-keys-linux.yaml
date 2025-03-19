@@ -16,10 +16,6 @@
   hosts: linux
   tasks:
     - name: loop over hosts and append to known_hosts
-      remote_user: "{{ ansible_ssh_user }}"
-      become: true
-      become_method: sudo
-      become_user: "{{ ansible_ssh_user }}"
       shell:
         cmd: 
           "ssh-keyscan -t rsa {{ ansible_ssh_user }}@{{ ansible_ssh_host }} >> /root/.ssh/known_hosts"
@@ -31,7 +27,6 @@
   tasks:
 
     - name: Set authorized key on remote
-      become: true
       authorized_key:
         user: "{{ ansible_user }}"
         state: present
