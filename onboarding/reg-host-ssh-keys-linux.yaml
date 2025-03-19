@@ -35,7 +35,6 @@
         key: "{{ lookup('pipe', 'ssh-keyscan -T 10 ' + item + ',' + lookup('dig', item)) }}"
         state: present
       with_items: '{{ ssh_known_hosts }}'
-      become: false
 
 - name: Prepare localhost for Ansible usage 2/3 - Add pubkey to remote node.
   hosts: linux
