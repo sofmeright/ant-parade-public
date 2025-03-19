@@ -17,19 +17,19 @@
   remote_user: sudo_user
   become: true
   become_method: sudo
-  become_user: "{{ ansible_user }}"
+  become_user: "{{ remote_user }}"
   tasks:
     - name: loop over hosts and append to known_hosts
       shell:
         cmd: 
-          "ssh-keyscan -t rsa {{ ansible_user }}@{{ ansible_default_ipv4.address }} >> /root/.ssh/known_hosts"
+          "ssh-keyscan -t rsa {{ remote_user }}@{{ ansible_default_ipv4.address }} >> /root/.ssh/known_hosts"
 
 - name: Prepare host(s) for Ansible usage
   hosts: linux
   remote_user: sudo_user
   become: true
   become_method: sudo
-  become_user: "{{ ansible_user }}"
+  become_user: "{{ remote_user }}"
   gather_facts: no
 
   tasks:
