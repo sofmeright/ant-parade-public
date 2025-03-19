@@ -9,8 +9,8 @@
     - name: Transfer fullchain.pem from from cell-membrane to master
       run_once: yes
       fetch: src=/etc/letsencrypt/live/prplanit.com/fullchain.pem dest=/temp flat=yes
-      when: "{{ inventory_hostname == 'cell-membrane' }}"
+      when: "{{ ansible_ssh_host == 'cell-membrane' }}"
 
     - name: Transfer fullchain.pem from master to moor
       copy: src=/temp/fullchain.pem dest=/mnt/app_data/Server/_docker_stack/tactical_rmm/certs
-      when: "{{ inventory_hostname == 'moor' }}"
+      when: "{{ ansible_ssh_host == 'moor' }}"
