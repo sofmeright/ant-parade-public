@@ -1,29 +1,27 @@
 # To use this we run -> ansible-playbook --limit ubuntu -i inventory/onboarding.yaml onboarding/reg-host-ssh-keys-linux.yaml
 ---
-- name: Prepare localhost for Ansible usage 1/3 - Generate SSH Key
+- name: Gather facts from 'all' hosts in inventory
+  hosts: all
+  vars:
+    ansible_host_key_checking: false
+    ansible_ssh_extra_args: '-o UserKnownHostsFile=/dev/null'
+  tasks:
+    - name: Get network info
+      ansible.builtin.setup:
+        gather_subset: network
+
+- name: Add public keys to known_hosts file
   hosts: localhost
   connection: local
-  gather_facts: yes
+  vars:
+    ssh_known_hosts_file: "{{ lookup('env','HOME') + '/.ssh/known_hosts' }}"
+    ssh_known_hosts: "{{ groups['all'] }}"
   tasks:
-    - name: Generate SSH key
-      user:
-        name: "{{ ansible_user_id }}"
-        generate_ssh_key: yes
-
-- name: Prepare localhost for Ansible usage 2/3 - Add hosts fingerprints
-  hosts: linux
-  tasks:
-    - name: loop over hosts and append to known_hosts
-      shell:
-        cmd: 
-          "ssh-keyscan -t rsa {{ ansible_ssh_user }}@{{ ansible_ssh_host }} >> /root/.ssh/known_hosts"
-
-- name: Prepare localhost for Ansible usage 2/3 - Add pubkey to remote node.
-  hosts: linux
-  gather_facts: no
-  tasks:
-    - name: Set authorized key on remote
-      authorized_key:
-        user: "{{ ansible_user }}"
+    - name: Add to known_hosts
+      ansible.builtin.known_hosts:
+        path: '{{ ssh_known_hosts_file }}'
+        name: '{{ item }}'
+        key: "{{ lookup('pipe', 'ssh-keyscan -T 10 ' + item + ',' + lookup('dig', item)) }}"
         state: present
-        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+      with_items: '{{ ssh_known_hosts }}'
+      become: false
