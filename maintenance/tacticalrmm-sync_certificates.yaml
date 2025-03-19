@@ -13,9 +13,9 @@
         state: directory
     - name: Transfer fullchain.pem from from cell-membrane to master
       run_once: yes
-      fetch: src=/etc/letsencrypt/live/prplanit.com/fullchain.pem dest=certs/ flat=yes
+      fetch: src=/etc/letsencrypt/live/prplanit.com/fullchain.pem dest=~/ flat=yes
       when: inventory_hostname == "cell-membrane"
 
     - name: Transfer fullchain.pem from master to moor
-      copy: src=certs/fullchain.pem dest=/mnt/app_data/Server/_docker_stack/tactical_rmm/certs/ flat=yes
+      copy: src=fullchain.pem dest=/mnt/app_data/Server/_docker_stack/tactical_rmm/certs/ flat=yes
       when: inventory_hostname == "moor"
