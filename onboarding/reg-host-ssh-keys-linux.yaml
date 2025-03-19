@@ -22,7 +22,7 @@
     - name: loop over hosts and append to known_hosts
       shell:
         cmd: 
-          "ssh-keyscan -t rsa {{ ansible_default_ipv4.address }} >> /root/.ssh/known_hosts"
+          "ssh-keyscan -t rsa {{ ansible_user }}@{{ ansible_default_ipv4.address }} >> /root/.ssh/known_hosts"
 
 - name: Prepare host(s) for Ansible usage
   hosts: linux
