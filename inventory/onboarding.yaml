@@ -5,8 +5,8 @@ proxmox:
   vars:
     ansible_user: root
     # These passwords should be removed after you enable ssh key based access!
-    ansible_password: password
-    ansible_become_pass: password
+    #ansible_password: password
+    #ansible_become_pass: password
 ansible:
   hosts:
     localhost:
@@ -72,8 +72,8 @@ ubuntu:
   vars:
     ansible_user: kai
     # These passwords should be removed after you enable ssh key based access!
-    ansible_password: password
-    ansible_become_pass: password
+    #ansible_password: password
+    #ansible_become_pass: password
 windows_10:
   hosts:
     LeafBlower:
