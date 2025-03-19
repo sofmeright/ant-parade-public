@@ -7,15 +7,15 @@
   become_user: root
   tasks:
     - name: Creates directory
-      when: ansible_ssh_host == "moor"
+      when: {{ ansible_ssh_host }} == "moor"
       ansible.builtin.file:
         path: /mnt/app_data/Server/_docker_stack/tactical_rmm/certs
         state: path
     - name: Transfer fullchain.pem from from cell-membrane to master
       run_once: yes
       fetch: src=/etc/letsencrypt/live/prplanit.com/fullchain.pem dest=/mnt/app_data/Server/Web-App/_docker-stack/semaphore/temp flat=yes
-      when: ansible_ssh_host == "cell-membrane"
+      when: {{ ansible_ssh_host }} == "cell-membrane"
 
     - name: Transfer fullchain.pem from master to moor
       copy: src=/mnt/app_data/Server/Web-App/_docker-stack/semaphore/temp/fullchain.pem dest=/mnt/app_data/Server/_docker_stack/tactical_rmm/certs
-      when: ansible_ssh_host == "moor"
+      when: {{ ansible_ssh_host }} == "moor"
