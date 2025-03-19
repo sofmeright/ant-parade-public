@@ -1,17 +1,16 @@
 ---
 - name: Playbook to transfer certificates to tactical-rmm.
-  hosts: linux
-  become: true
-  vars:
-    uri: "//172.22.22.101/timecapsule"
-    username: "kai253"
-    password: ""
-    mountpoint: "/mnt/timecapsule"
-  tasks: 
-    - name: Copy file with owner and permissions
-    ansible.builtin.copy:
-        src: /srv/myfiles/foo.conf
-        dest: /etc/foo.conf
-        owner: foo
-        group: foo
-        mode: '0644'
+- hosts: cell-membrane
+  tasks:
+    - name: Transfer transfer certificates for prplanit.com from cell-membrane to moor for tactical-rmm.
+      synchronize:
+        src: /etc/letsencrypt/live/prplanit.com/fullchain.pem
+        dest: /mnt/app_data/Server/_docker_stack/tactical_rmm/certs/fullchain.pem
+        mode: pull
+      delegate_to: moor
+    - name: Transfer transfer certificates for prplanit.com from cell-membrane to moor for tactical-rmm.
+      synchronize:
+        src: /etc/letsencrypt/live/prplanit.com/privkey.pem
+        dest:/mnt/app_data/Server/_docker_stack/tactical_rmm/certs/privkey.pem
+        mode: pull
+      delegate_to: moor
