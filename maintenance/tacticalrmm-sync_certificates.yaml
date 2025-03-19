@@ -1,5 +1,5 @@
 ---
-- hosts: linux
+- hosts: ansible,cell-membrane,moor
   name: Playbook to transfer certificates for *.prplanit.com from cell-membrane to moor for tactical-rmm.
   tasks:
     - name: Transfer fullchain.pem from from cell-membrane to master
