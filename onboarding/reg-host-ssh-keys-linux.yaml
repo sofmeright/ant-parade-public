@@ -15,9 +15,9 @@
 
 - name: Add hosts fingerprints
   hosts: linux
-  become: true
   tasks:
     - name: loop over hosts and append to known_hosts
+      become: true
       become_user: "{{ ansible_ssh_user }}"
       become_method: sudo
       shell:
