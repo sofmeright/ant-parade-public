@@ -1,6 +1,5 @@
 # To use this we run -> ansible-playbook --limit linux -i inventory/complete.yaml maintenance/update-hosts-linux.yaml
 ---
-
 - name: Linux OS Upgrade
   hosts: ansible
   gather_facts: yes
