@@ -1,0 +1,17 @@
+---
+- name: Playbook to transfer certificates to tactical-rmm.
+  hosts: linux
+  become: true
+  vars:
+    uri: "//172.22.22.101/timecapsule"
+    username: "kai253"
+    password: ""
+    mountpoint: "/mnt/timecapsule"
+  tasks: 
+    - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+        src: /srv/myfiles/foo.conf
+        dest: /etc/foo.conf
+        owner: foo
+        group: foo
+        mode: '0644'
