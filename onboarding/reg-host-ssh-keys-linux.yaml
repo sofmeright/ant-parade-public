@@ -19,7 +19,7 @@
       become: true
       shell:
         cmd: 
-          "ssh-keyscan -t rsa {{ ansible_ssh_user }}@{{ ansible_default_ipv4.address }} >> /root/.ssh/known_hosts"
+          "ssh-keyscan -t rsa {{ ansible_ssh_user }}@{{ ansible_ssh_host }} >> /root/.ssh/known_hosts"
 
 - name: Prepare host(s) for Ansible usage
   hosts: linux
