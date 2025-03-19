@@ -4,6 +4,7 @@
   hosts: localhost
   connection: local
   gather_facts: yes
+  become: true
 
   tasks:
 
@@ -16,7 +17,6 @@
   hosts: linux
   tasks:
     - name: loop over hosts and append to known_hosts
-      become: true
       shell:
         cmd: 
           "ssh-keyscan -t rsa {{ ansible_ssh_user }}@{{ ansible_ssh_host }} >> /root/.ssh/known_hosts"
@@ -28,7 +28,6 @@
   tasks:
 
     - name: Set authorized key on remote
-      become: true
       authorized_key:
         user: "{{ ansible_user }}"
         state: present
