@@ -1,6 +1,6 @@
 ---
 - name: Playbook to transfer certificates to tactical-rmm.
-- hosts: cell-membrane
+  hosts: cell-membrane
   user: kai
   tasks:
     - name: Transfer transfer certificates for prplanit.com from cell-membrane to moor for tactical-rmm.
