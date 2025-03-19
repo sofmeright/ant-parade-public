@@ -17,5 +17,5 @@
       when: inventory_hostname == "cell-membrane"
 
     - name: Transfer fullchain.pem from master to moor
-      copy: src=certs/fullchain.pem dest=/mnt/app_data/Server/_docker_stack/tactical_rmm/certs/
+      copy: src=certs/fullchain.pem dest=/mnt/app_data/Server/_docker_stack/tactical_rmm/certs/ flat=yes
       when: inventory_hostname == "moor"
