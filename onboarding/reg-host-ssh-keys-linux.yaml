@@ -29,16 +29,10 @@
           "ssh-keyscan -t rsa {{ ansible_ssh_host }} >> /root/.ssh/known_hosts"
 
 
-- name: Prepare localhost for Ansible usage 3/3 - Add pubkey to remote node.
+- name: Prepare localhost for Ansible usage 3/3 - Copying ssh public key to remote host.
   hosts: linux
-  gather_facts: no
-  remote_user: "{{ ansible_ssh_user }}"
+  gather_facts: false
   become: true
-  become_method: sudo
-  become_user: root
-  tasks:
-    - name: Set authorized key on remote
-      authorized_key:
-        user: "{{ ansible_user }}"
-        state: present
-        key: "/root/.ssh/id_rsa.pub"
+  remote_user: ansible_ssh_user
+  roles:
+    - ssh-key-copy
