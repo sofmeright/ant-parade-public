@@ -11,30 +11,13 @@
         name: "{{ ansible_user_id }}"
         generate_ssh_key: yes
 
-- name: Gather facts from 'all' hosts in inventory
+- name: Prepare localhost for Ansible usage 2/3 - Add hosts fingerprints
   hosts: linux
-  vars:
-    ansible_host_key_checking: false
-    ansible_ssh_extra_args: '-o UserKnownHostsFile=/dev/null'
   tasks:
-    - name: Get network info
-      ansible.builtin.setup:
-        gather_subset: network
-
-- name: Add public keys to known_hosts file
-  hosts: linux
-  connection: local
-  vars:
-    ssh_known_hosts_file: "{{ lookup('env','HOME') + '/.ssh/known_hosts' }}"
-    ssh_known_hosts: "{{ groups['all'] }}"
-  tasks:
-    - name: Add to known_hosts
-      ansible.builtin.known_hosts:
-        path: '{{ ssh_known_hosts_file }}'
-        name: '{{ item }}'
-        key: "{{ lookup('pipe', 'ssh-keyscan -T 10 ' + item + ',' + lookup('dig', item)) }}"
-        state: present
-      with_items: '{{ ssh_known_hosts }}'
+    - name: loop over hosts and append to known_hosts
+      shell:
+        cmd: 
+          "ssh-keyscan -t rsa {{ ansible_ssh_user }}@{{ ansible_ssh_host }} >> /root/.ssh/known_hosts"
 
 - name: Prepare localhost for Ansible usage 2/3 - Add pubkey to remote node.
   hosts: linux
