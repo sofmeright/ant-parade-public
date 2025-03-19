@@ -17,7 +17,7 @@
   tasks:
     - name: loop over hosts and append to known_hosts
       become: true
-      become_user: {{ ansible_ssh_user }}
+      become_user: "{{ ansible_ssh_user }}"
       become_method: sudo
       shell:
         cmd: 
@@ -31,7 +31,7 @@
 
     - name: Set authorized key on remote
       become: true
-      become_user: {{ ansible_ssh_user }}
+      become_user: "{{ ansible_ssh_user }}"
       become_method: sudo
       authorized_key:
         user: "{{ ansible_user }}"
