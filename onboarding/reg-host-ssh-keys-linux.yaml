@@ -2,6 +2,8 @@
 ---
 
 - name: Prepare localhost for Ansible usage 1/3 - Generate SSH Key
+  vars:
+    ansible_host_key_checking: false
   hosts: localhost
   connection: local
   gather_facts: yes
@@ -17,7 +19,7 @@
     - name: loop over hosts and append to known_hosts
       shell:
         cmd: 
-          "ssh-keyscan -t rsa {{ ansible_ssh_user }}@{{ ansible_ssh_host }} >> /root/.ssh/known_hosts"
+          "ssh-keyscan -t rsa {{ ansible_ssh_host }} >> /root/.ssh/known_hosts"
 
 - name: Prepare localhost for Ansible usage 2/3 - Add pubkey to remote node.
   hosts: linux
