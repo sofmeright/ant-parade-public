@@ -3,15 +3,15 @@
   hosts: cell-membrane
   user: kai
   tasks:
-    - name: Transfer transfer certificates for prplanit.com from cell-membrane to moor for tactical-rmm.
+    - name: Transfer certificate for prplanit.com from cell-membrane to moor for tactical-rmm.
       synchronize:
         src: /etc/letsencrypt/live/prplanit.com/fullchain.pem
         dest: /mnt/app_data/Server/_docker_stack/tactical_rmm/certs/fullchain.pem
         mode: pull
       delegate_to: moor
-    - name: Transfer transfer certificates for prplanit.com from cell-membrane to moor for tactical-rmm.
+    - name: Transfer private key for prplanit.com from cell-membrane to moor for tactical-rmm.
       synchronize:
         src: /etc/letsencrypt/live/prplanit.com/privkey.pem
-        dest:/mnt/app_data/Server/_docker_stack/tactical_rmm/certs/privkey.pem
+        dest: /mnt/app_data/Server/_docker_stack/tactical_rmm/certs/privkey.pem
         mode: pull
       delegate_to: moor
