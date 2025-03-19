@@ -33,9 +33,9 @@
   hosts: linux
   gather_facts: false
   become: true
-  remote_user: "{{ ansible_ssh_user }}"
   tasks:
     - name: Copying ssh public key to remote host.
+      remote_user: "{{ ansible_ssh_user }}"
       authorized_key:
         user: "{{ ansible_ssh_user }}"
         state: present
