@@ -4,6 +4,7 @@
   hosts: localhost
   connection: local
   gather_facts: yes
+  become: true
 
   tasks:
 
