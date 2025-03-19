@@ -1,15 +1,15 @@
 ---
-- name: Playbook to transfer certificates to tactical-rmm.
+- name: Playbook to transfer certificates for *.prplanit.com from cell-membrane to moor for tactical-rmm.
   hosts: cell-membrane
   user: kai
   tasks:
-    - name: Transfer certificate for prplanit.com from cell-membrane to moor for tactical-rmm.
+    - name: Transfer fullchain.pem from cell-membrane to moor.
       synchronize:
         src: /etc/letsencrypt/live/prplanit.com/fullchain.pem
         dest: /mnt/app_data/Server/_docker_stack/tactical_rmm/certs/fullchain.pem
         mode: pull
       delegate_to: moor
-    - name: Transfer private key for prplanit.com from cell-membrane to moor for tactical-rmm.
+    - name: Transfer privkey.pem from cell-membrane to moor.
       synchronize:
         src: /etc/letsencrypt/live/prplanit.com/privkey.pem
         dest: /mnt/app_data/Server/_docker_stack/tactical_rmm/certs/privkey.pem
