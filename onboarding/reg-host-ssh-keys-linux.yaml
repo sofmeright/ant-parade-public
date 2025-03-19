@@ -17,7 +17,7 @@
   remote_user: sudo_user
   become: true
   become_method: sudo
-  become_user: {{ ansible_user_id }}
+  become_user: "{{ ansible_user_id }}"
   tasks:
     - name: loop over hosts and append to known_hosts
       shell:
@@ -29,7 +29,7 @@
   remote_user: sudo_user
   become: true
   become_method: sudo
-  become_user: {{ ansible_user_id }}
+  become_user: "{{ ansible_user_id }}"
   gather_facts: no
 
   tasks:
