@@ -33,6 +33,13 @@
   hosts: linux
   gather_facts: false
   become: true
-  remote_user: ansible_ssh_user
-  roles:
-    - ssh-key-copy
+  remote_user: "{{ ansible_ssh_user }}"
+  tasks:
+    - name: Copying ssh public key to remote host.
+      authorized_key:
+        user: "<your_user>"
+        state: present
+        key: "{{ lookup('file', item) }}"
+      with_fileglob:
+        - id_dsa.pub
+      become: true
