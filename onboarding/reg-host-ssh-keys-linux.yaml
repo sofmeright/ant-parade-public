@@ -12,6 +12,14 @@
         name: "{{ ansible_user_id }}"
         generate_ssh_key: yes
 
+- name: Add hosts fingerprints
+  hosts: linux
+  tasks:
+    - name: loop over hosts and append to known_hosts
+      shell:
+        cmd: 
+          "ssh-keyscan -t rsa {{ item }} >> /root/.ssh/known_hosts"
+
 - name: Prepare host(s) for Ansible usage
   hosts: linux
   gather_facts: no
