@@ -12,7 +12,7 @@
         generate_ssh_key: yes
 
 - name: Gather facts from 'all' hosts in inventory
-  hosts: all
+  hosts: linux
   vars:
     ansible_host_key_checking: false
     ansible_ssh_extra_args: '-o UserKnownHostsFile=/dev/null'
@@ -22,7 +22,7 @@
         gather_subset: network
 
 - name: Add public keys to known_hosts file
-  hosts: localhost
+  hosts: linux
   connection: local
   vars:
     ssh_known_hosts_file: "{{ lookup('env','HOME') + '/.ssh/known_hosts' }}"
