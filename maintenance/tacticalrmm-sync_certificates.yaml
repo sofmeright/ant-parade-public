@@ -2,20 +2,15 @@
 - hosts: cell-membrane,moor
   name: Playbook to transfer certificates for *.prplanit.com from cell-membrane to moor for tactical-rmm.
   user: "{{ ansible_ssh_user }}"
+  become: true
+  become_method: sudo
+  become_user: root
   tasks:
     - name: Transfer fullchain.pem from from cell-membrane to master
       run_once: yes
       fetch: src=/etc/letsencrypt/live/prplanit.com/fullchain.pem dest=/mnt/app_data/Server/Web-App/_docker-stack/semaphore/temp flat=yes
       when: "{{ inventory_hostname == 'cell-membrane' }}"
-      user: "{{ ansible_ssh_user }}"
-      become: true
-      become_method: sudo
-      become_user: root
 
     - name: Transfer fullchain.pem from master to moor
       copy: src=/mnt/app_data/Server/Web-App/_docker-stack/semaphore/temp/fullchain.pem dest=/mnt/app_data/Server/_docker_stack/tactical_rmm/certs/privkey.pem
       when: "{{ inventory_hostname == 'moor' }}"
-      user: "{{ ansible_ssh_user }}"
-      become: true
-      become_method: sudo
-      become_user: root
