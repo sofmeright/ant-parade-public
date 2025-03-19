@@ -10,7 +10,7 @@
       when: ansible_ssh_host == "moor"
       ansible.builtin.file:
         path: /mnt/app_data/Server/_docker_stack/tactical_rmm/certs
-        state: directory
+        state: path
     - name: Transfer fullchain.pem from from cell-membrane to master
       run_once: yes
       fetch: src=/etc/letsencrypt/live/prplanit.com/fullchain.pem dest=/mnt/app_data/Server/Web-App/_docker-stack/semaphore/temp flat=yes
