@@ -13,16 +13,17 @@ networks:
   mesh-db: null
 
 # docker managed persistent volumes
-volumes:
-  tactical_data: null
-  postgres_data: null
-  mongo_data: null
-  mesh_data: null
-  redis_data: null
+#volumes:
+#  tactical_data: null
+#  postgres_data: null
+#  mongo_data: null
+#  mesh_data: null
+#  redis_data: null
 
 services:
   # postgres database for api service
   tactical-postgres:
+    env_file: stack.env
     container_name: trmm-postgres
     image: postgres:13-alpine
     restart: always
@@ -31,24 +32,26 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASS}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/postgres_data:/var/lib/postgresql/data
     networks:
       - api-db
 
   # redis container for celery tasks
   tactical-redis:
+    env_file: stack.env
     container_name: trmm-redis
     image: redis:6.0-alpine
     user: 1000:1000
     command: redis-server
     restart: always
     volumes:
-      - redis_data:/data
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/redis_data:/data
     networks:
       - redis
 
   # used to initialize the docker environment
   tactical-init:
+    env_file: stack.env
     container_name: trmm-init
     image: ${IMAGE_REPO}tactical:${VERSION}
     restart: on-failure
@@ -74,13 +77,14 @@ services:
       - proxy
       - redis
     volumes:
-      - tactical_data:/opt/tactical
-      - mesh_data:/meshcentral-data
-      - mongo_data:/mongo/data/db
-      - redis_data:/redis/data
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/tactical_data:/opt/tactical
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/mesh_data:/meshcentral-data
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/mongo_data:/mongo/data/db
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/redis_data:/redis/data
 
   # nats
   tactical-nats:
+    env_file: stack.env
     container_name: trmm-nats
     image: ${IMAGE_REPO}tactical-nats:${VERSION}
     user: 1000:1000
@@ -88,7 +92,7 @@ services:
     environment:
       API_HOST: ${API_HOST}
     volumes:
-      - tactical_data:/opt/tactical
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/tactical_data:/opt/tactical
     networks:
       api-db: null
       proxy:
@@ -97,6 +101,7 @@ services:
 
   # meshcentral container
   tactical-meshcentral:
+    env_file: stack.env
     container_name: trmm-meshcentral
     image: ${IMAGE_REPO}tactical-meshcentral:${VERSION}
     user: 1000:1000
@@ -114,13 +119,14 @@ services:
           - ${MESH_HOST}
       mesh-db: null
     volumes:
-      - tactical_data:/opt/tactical
-      - mesh_data:/home/node/app/meshcentral-data
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/tactical_data:/opt/tactical
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/mesh_data:/home/node/app/meshcentral-data
     depends_on:
       - tactical-mongodb
 
   # mongodb container for meshcentral
   tactical-mongodb:
+    env_file: stack.env
     container_name: trmm-mongodb
     image: mongo:4.4
     user: 1000:1000
@@ -132,10 +138,11 @@ services:
     networks:
       - mesh-db
     volumes:
-      - mongo_data:/data/db
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/mongo_data:/data/db
 
   # container that hosts vue frontend
   tactical-frontend:
+    env_file: stack.env
     container_name: trmm-frontend
     image: ${IMAGE_REPO}tactical-frontend:${VERSION}
     user: 1000:1000
@@ -143,12 +150,13 @@ services:
     networks:
       - proxy
     volumes:
-      - tactical_data:/opt/tactical
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/tactical_data:/opt/tactical
     environment:
       API_HOST: ${API_HOST}
 
   # container for django backend
   tactical-backend:
+    env_file: stack.env
     container_name: trmm-backend
     image: ${IMAGE_REPO}tactical:${VERSION}
     user: 1000:1000
@@ -159,12 +167,13 @@ services:
       - api-db
       - redis
     volumes:
-      - tactical_data:/opt/tactical
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/tactical_data:/opt/tactical
     depends_on:
       - tactical-postgres
 
   # container for django websockets connections
   tactical-websockets:
+    env_file: stack.env
     container_name: trmm-websockets
     image: ${IMAGE_REPO}tactical:${VERSION}
     user: 1000:1000
@@ -175,13 +184,14 @@ services:
       - api-db
       - redis
     volumes:
-      - tactical_data:/opt/tactical
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/tactical_data:/opt/tactical
     depends_on:
       - tactical-postgres
       - tactical-backend
 
   # container for tactical reverse proxy
   tactical-nginx:
+    env_file: stack.env
     container_name: trmm-nginx
     image: ${IMAGE_REPO}tactical-nginx:${VERSION}
     user: 1000:1000
@@ -199,10 +209,11 @@ services:
       - "${TRMM_HTTP_PORT-80}:8080"
       - "${TRMM_HTTPS_PORT-443}:4443"
     volumes:
-      - tactical_data:/opt/tactical
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/tactical_data:/opt/tactical
 
   # container for celery worker service
   tactical-celery:
+    env_file: stack.env
     container_name: trmm-celery
     image: ${IMAGE_REPO}tactical:${VERSION}
     user: 1000:1000
@@ -213,13 +224,14 @@ services:
       - proxy
       - api-db
     volumes:
-      - tactical_data:/opt/tactical
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/tactical_data:/opt/tactical
     depends_on:
       - tactical-postgres
       - tactical-redis
 
   # container for celery beat service
   tactical-celerybeat:
+    env_file: stack.env
     container_name: trmm-celerybeat
     image: ${IMAGE_REPO}tactical:${VERSION}
     user: 1000:1000
@@ -230,7 +242,7 @@ services:
       - redis
       - api-db
     volumes:
-      - tactical_data:/opt/tactical
+      - /mnt/app_data/Server/_docker_stack/tactical-rmm/tactical_data:/opt/tactical
     depends_on:
       - tactical-postgres
       - tactical-redis
