@@ -1,25 +1,4 @@
 #version: "3.7"
-
-# networks
-networks:
-  proxy:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.20.0.0/24
-  api-db: null
-  redis: null
-  mesh-db: null
-
-# docker managed persistent volumes
-#volumes:
-#  tactical_data: null
-#  postgres_data: null
-#  mongo_data: null
-#  mesh_data: null
-#  redis_data: null
-
 services:
   # postgres database for api service
   tactical-postgres:
@@ -247,3 +226,25 @@ services:
     depends_on:
       - tactical-postgres
       - tactical-redis
+
+      
+# networks
+networks:
+  proxy:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/24
+  api-db: null
+  redis: null
+  mesh-db: null
+
+# docker managed persistent volumes
+#volumes:
+#  tactical_data: null
+#  postgres_data: null
+#  mongo_data: null
+#  mesh_data: null
+#  redis_data: null
+
