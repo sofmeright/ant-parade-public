@@ -1,4 +1,3 @@
-#version: "3.7"
 services:
   # postgres database for api service
   tactical-postgres:
@@ -248,3 +247,4 @@ networks:
 #  mesh_data: null
 #  redis_data: null
 
+#version: "3.7"
