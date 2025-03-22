@@ -4,6 +4,7 @@ proxmox:
       ansible_host: 172.22.181.51
   vars:
     ansible_user: root
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
     # These passwords should be removed after you enable ssh key based access!
     #ansible_password: password
     #ansible_become_pass: password
@@ -71,6 +72,7 @@ ubuntu:
     ubuntu_24_04:
   vars:
     ansible_user: kai
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
     # These passwords should be removed after you enable ssh key based access!
     #ansible_password: password
     #ansible_become_pass: password
