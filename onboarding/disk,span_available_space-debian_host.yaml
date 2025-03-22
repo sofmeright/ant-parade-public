@@ -1,0 +1,12 @@
+---
+- name: Preparing to extend {{ u_target_host }}'s disk to span available space.
+  hosts: linux
+  become: true
+  tasks: 
+    - name: Extend an existing partition to fill all available space
+    community.general.parted:
+        device: /dev/sdb
+        number: "{{ sdb_info.partitions | length }}"
+        part_end: "100%"
+        resize: true
+        state: present
