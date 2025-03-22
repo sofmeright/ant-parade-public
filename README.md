@@ -158,3 +158,13 @@ Update the line to look like such:
 # Allow members of group sudo to execute any command
 %sudo   ALL=(ALL:ALL) NOPASSWD: ALL
 ```
+# Resolving Ansible "REMOTE HOST IDENTIFICATION HAS CHANGED" issue (Ansible Semaphore)
+Use the ``docker exec -it semaphore-semaphore-1 sh`` command to open a shell into the Semaphore docker container.
+
+Edit the ansible configuration file using ``nano /home/semaphore/ansible.cfg``, adapt your current config to contain the following:
+
+```
+[defaults]
+host_key_checking = False
+```
+At this point playbooks that fail due to this issue should succeed and we can use an ansible playbook to add this host properly to the known host list.
