@@ -5,7 +5,7 @@
   tasks: 
 
     - name: "Extend the partition to span the entire disk."
-      command: “growpart /dev/sda 3””
+      command: “growpart /dev/sda 3”
 
     - name: "Extend the PV to span the entire disk."
       command: “pvresize /dev/sda3”
