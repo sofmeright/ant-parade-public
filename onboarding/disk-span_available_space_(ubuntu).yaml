@@ -11,11 +11,7 @@
       command: pvresize /dev/sda3
 
     - name: Extend the LVM to span the entire disk.
-      lvol:
-        vg: “ubuntu-vg”
-        lv: “ubuntu-lv”
-        size: +100%FREE
-        resizefs: true
+      command: lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
 
     - name: "Resize the filesystem without rebooting {{ sfmr_target_host }}."
-      command: “resize2fs /dev/ubuntu-vg/ubuntu-lv”
+      command: resize2fs /dev/ubuntu-vg/ubuntu-lv
