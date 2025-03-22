@@ -8,7 +8,7 @@
       command: “growpart /dev/sda 3”
 
     - name: "Extend the PV to span the entire disk."
-      command: “pvresize /dev/sda3”
+      command: pvresize /dev/sda3
 
     - name: Extend the LVM to span the entire disk.
       lvol:
