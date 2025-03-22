@@ -5,10 +5,10 @@
   tasks: 
 
     - name: "Extend the partition to span the entire disk."
-      command: “sudo growpart {{ sfmr_target_disk }}”
+      command: “sudo growpart /dev/sda 3””
 
     - name: "Extend the PV to span the entire disk."
-      command: “sudo pvresize {{ sfmr_target_disk }}”
+      command: “sudo pvresize /dev/sda3”
 
     - name: Extend the LVM to span the entire disk.
       lvol:
