@@ -5,6 +5,6 @@
   tasks: 
   - name: Ansible apt install neofetch
     apt:
-      name: neofetch tree
+      name: nano neofetch tree
       state: present
       update_cache: yes # Simulate apt-update on the first run.
