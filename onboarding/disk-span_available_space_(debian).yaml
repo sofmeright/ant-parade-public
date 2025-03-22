@@ -3,10 +3,19 @@
   hosts: "{{ sfmr_target_host }}"
   become: true
   tasks: 
-    - name: Extend an existing partition to fill all available space
-      community.general.parted:
-        device: "{{ sfmr_target_disk }}"
-        number: "{{ sfmr_target_part }}"
-        part_end: "100%"
-        resize: true
-        state: present
+
+    - name: "Extend the partition to span the entire disk."
+      command: “sudo growpart {{ sfmr_target_disk }}”
+
+    - name: "Extend the PV to span the entire disk."
+      command: “sudo pvresize {{ sfmr_target_disk }}”
+
+    - name: Extend the LVM to span the entire disk.
+      lvol:
+        vg: “ubuntu-vg”
+        lv: “ubuntu-lv”
+        size: +100%FREE
+        resizefs: true
+
+    - name: "Resize the filesystem without rebooting {{ sfmr_target_host }}."
+      command: “sudo resize2fs /dev/ubuntu-vg/ubuntu-lv”
