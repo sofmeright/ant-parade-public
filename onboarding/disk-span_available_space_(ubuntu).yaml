@@ -4,14 +4,14 @@
   become: true
   tasks: 
 
-    - name: "Extend the partition to span the entire disk."
+    - name: Extend the partition to span the entire disk.
       command: growpart /dev/sda 3
 
-    - name: "Extend the PV to span the entire disk."
+    - name: Extend the PV to span the entire disk.
       command: pvresize /dev/sda3
 
     - name: Extend the LVM to span the entire disk.
       command: lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
 
-    - name: "Resize the filesystem without rebooting {{ sfmr_target_host }}."
+    - name: Resize the filesystem without rebooting {{ sfmr_target_host }}.
       command: resize2fs /dev/ubuntu-vg/ubuntu-lv
