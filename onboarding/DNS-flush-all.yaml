@@ -7,6 +7,7 @@
     - name: Restarting AdGuard Node 1.
       community.docker.docker_compose_v2:
         project_src: /mnt/app_data/Server/_docker_stack/adguard
+        recreate: always
 
 - name: Flushing DNS - 2/3 - Restarting Adguard Node 2 to flush all DNS changes
   hosts: "homing-pigeon"
@@ -15,6 +16,7 @@
     - name: Restarting AdGuard Node 2.
       community.docker.docker_compose_v2:
         project_src: /mnt/app_data/Server/_docker_stack/adguard
+        recreate: always
 
 - name: Flushing DNS - 3/3 - Flushing DNS changes for all ubuntu machines.
   hosts: "ubuntu_24_04,!the-usual-suspect,!homing-pigeon"
