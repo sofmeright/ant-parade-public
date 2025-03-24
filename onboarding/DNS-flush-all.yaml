@@ -1,18 +1,18 @@
 ---
 
-- name: Flushing DNS - 1/3 - Restarting Adguard Node 1 {{ sfmr_target_host }} to flush all DNS changes
+- name: Flushing DNS - 1/3 - Restarting Adguard Node 1 to flush all DNS changes
   hosts: "the-usual-suspect"
   become: true
   tasks: 
-    - name: Restarting AdGuard on {{ sfmr_target_host }}.
+    - name: Restarting AdGuard on {{ ansible_ssh_user }}.
       community.docker.docker_compose_v2:
         project_src: /mnt/app_data/Server/_docker_stack/adguard
 
-- name: Flushing DNS - 2/3 - Restarting Adguard Node 2 {{ sfmr_target_host }} to flush all DNS changes
+- name: Flushing DNS - 2/3 - Restarting Adguard Node 2 to flush all DNS changes
   hosts: "homing-pigeon"
   become: true
   tasks: 
-    - name: Restarting AdGuard on {{ sfmr_target_host }}.
+    - name: Restarting AdGuard on {{ ansible_ssh_user }}.
       community.docker.docker_compose_v2:
         project_src: /mnt/app_data/Server/_docker_stack/adguard
 
@@ -20,5 +20,5 @@
   hosts: "ubuntu_24_04,!the-usual-suspect,!homing-pigeon"
   become: true
   tasks: 
-    - name: Flush the DNS Cache for {{ sfmr_target_host }}.
+    - name: Flush the DNS Cache for {{ ansible_ssh_user }}.
       command: resolvectl flush-caches
