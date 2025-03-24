@@ -4,7 +4,7 @@
   hosts: "the-usual-suspect"
   become: true
   tasks: 
-    - name: Restarting AdGuard on "{{ ansible_ssh_host }}".
+    - name: Restarting AdGuard Node 1.
       community.docker.docker_compose_v2:
         project_src: /mnt/app_data/Server/_docker_stack/adguard
 
@@ -12,7 +12,7 @@
   hosts: "homing-pigeon"
   become: true
   tasks: 
-    - name: Restarting AdGuard on {{ ansible_ssh_host }}.
+    - name: Restarting AdGuard Node 2.
       community.docker.docker_compose_v2:
         project_src: /mnt/app_data/Server/_docker_stack/adguard
 
@@ -20,5 +20,5 @@
   hosts: "ubuntu_24_04,!the-usual-suspect,!homing-pigeon"
   become: true
   tasks: 
-    - name: Flush the DNS Cache for "{{ ansible_ssh_host }}".
+    - name: Flushing the DNS Cache for each host.
       command: resolvectl flush-caches
