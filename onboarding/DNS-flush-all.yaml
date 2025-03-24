@@ -1,0 +1,28 @@
+---
+
+- name: Flushing DNS - 1/3 - Restarting Adguard Node 1 {{ sfmr_target_host }} to flush all DNS changes
+  hosts: "the-usual-suspect"
+  become: true
+  tasks: 
+    - name: Restarting AdGuard.
+        tasks:
+            - name: create and start docker compose services
+                community.docker.docker_compose_v2:
+                    project_src: /mnt/app_data/Server/_docker_stack/adguard
+
+- name: Flushing DNS - 2/3 - Restarting Adguard Node 2 {{ sfmr_target_host }} to flush all DNS changes
+  hosts: "homing-pigeon"
+  become: true
+  tasks: 
+    - name: Restarting AdGuard.
+        tasks:
+            - name: create and start docker compose services
+                community.docker.docker_compose_v2:
+                    project_src: /mnt/app_data/Server/_docker_stack/adguard
+
+- name: Flushing DNS - 3/3 - Flushing DNS changes for all ubuntu machines.
+  hosts: "ubuntu_24_04"
+  become: true
+  tasks: 
+    - name: Flush the DNS Cache for {{ sfmr_target_host }}.
+      command: resolvectl flush-caches
