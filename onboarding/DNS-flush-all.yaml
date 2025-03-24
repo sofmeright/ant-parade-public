@@ -17,7 +17,7 @@
         project_src: /mnt/app_data/Server/_docker_stack/adguard
 
 - name: Flushing DNS - 3/3 - Flushing DNS changes for all ubuntu machines.
-  hosts: "ubuntu_24_04"
+  hosts: "ubuntu_24_04,!the-usual-suspect,!homing-pigeon"
   become: true
   tasks: 
     - name: Flush the DNS Cache for {{ sfmr_target_host }}.
