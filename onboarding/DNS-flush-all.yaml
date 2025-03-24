@@ -5,16 +5,16 @@
   become: true
   tasks: 
     - name: Restarting AdGuard on {{ sfmr_target_host }}.
-        community.docker.docker_compose_v2:
-            project_src: /mnt/app_data/Server/_docker_stack/adguard
+      community.docker.docker_compose_v2:
+        project_src: /mnt/app_data/Server/_docker_stack/adguard
 
 - name: Flushing DNS - 2/3 - Restarting Adguard Node 2 {{ sfmr_target_host }} to flush all DNS changes
   hosts: "homing-pigeon"
   become: true
   tasks: 
     - name: Restarting AdGuard on {{ sfmr_target_host }}.
-        community.docker.docker_compose_v2:
-            project_src: /mnt/app_data/Server/_docker_stack/adguard
+      community.docker.docker_compose_v2:
+        project_src: /mnt/app_data/Server/_docker_stack/adguard
 
 - name: Flushing DNS - 3/3 - Flushing DNS changes for all ubuntu machines.
   hosts: "ubuntu_24_04"
