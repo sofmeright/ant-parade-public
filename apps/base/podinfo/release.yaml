@@ -25,6 +25,3 @@ spec:
     ingress:
       enabled: true
       className: nginx
-  env: 
-    - name: PODINFO_UI_COLOR
-      value: "#2F1C35"
