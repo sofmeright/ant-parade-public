@@ -5,6 +5,9 @@ metadata:
   namespace: podinfo
 spec:
   releaseName: podinfo
+  env: 
+    - name: PODINFO_UI_COLOR
+      value: "#2F1C35"
   chart:
     spec:
       chart: podinfo
