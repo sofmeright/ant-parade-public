@@ -5,9 +5,6 @@ metadata:
   namespace: podinfo
 spec:
   releaseName: podinfo
-  env: 
-    - name: PODINFO_UI_COLOR
-      value: "#2F1C35"
   chart:
     spec:
       chart: podinfo
@@ -28,3 +25,6 @@ spec:
     ingress:
       enabled: true
       className: nginx
+  env: 
+    - name: PODINFO_UI_COLOR
+      value: "#2F1C35"
