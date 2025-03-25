@@ -19,3 +19,6 @@ spec:
       enabled: true
       annotations: {}
       type: LoadBalancer
+env: 
+  - name: PODINFO_UI_COLOR
+    value: "#2F1C35"
