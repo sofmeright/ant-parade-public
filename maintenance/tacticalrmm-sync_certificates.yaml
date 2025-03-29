@@ -9,7 +9,7 @@
     - name: Creates directory
       when: inventory_hostname == "moor"
       ansible.builtin.file:
-        path: /mnt/app_data/Server/_docker_stack/tactical_rmm/certs
+        path: /mnt/app_data/Server/_docker_stack/tactical-rmm/certs
         state: directory
 
     - name: Transfer fullchain.pem from from cell-membrane to master
@@ -18,7 +18,7 @@
       when: inventory_hostname == "cell-membrane"
 
     - name: Transfer fullchain.pem from master to moor
-      copy: src=~/fullchain.pem dest=/mnt/app_data/Server/_docker_stack/tactical_rmm/certs/
+      copy: src=~/fullchain.pem dest=/mnt/app_data/Server/_docker_stack/tactical-rmm/certs/
       when: inventory_hostname == "moor"
         
     - name: Transfer privkey.pem from from cell-membrane to master
@@ -27,5 +27,5 @@
       when: inventory_hostname == "cell-membrane"
 
     - name: Transfer privkey.pem from master to moor
-      copy: src=~/privkey.pem dest=/mnt/app_data/Server/_docker_stack/tactical_rmm/certs/
+      copy: src=~/privkey.pem dest=/mnt/app_data/Server/_docker_stack/tactical-rmm/certs/
       when: inventory_hostname == "moor"
