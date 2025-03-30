@@ -111,6 +111,10 @@ After pulling the git we ran the installer.sh we repackaged for convenience.
 ```
 bash Ant_Parade/onboarding/install-kustomize.sh 5.4.2
 ```
+# Bootstrapping fluxcd:
+```
+flux bootstrap git   --url=ssh://git@<localgitip>:1234/precisionplanit/ant_parade-public   --branch=main   --private-key-file=/root/.ssh/id_rsa   --password=   --path=clusters/overlays/production
+```
 # Pulling the repo to your local directory:
 ```
 git clone ssh://git@172.22.22.123:2222/PrecisionPlanIT/Ant_Parade.git
