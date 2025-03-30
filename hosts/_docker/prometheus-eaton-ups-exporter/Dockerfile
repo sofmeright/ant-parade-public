@@ -1,3 +1,5 @@
+# Name: prometheus-eaton-ups-exporter-sfmr:latest
+
 FROM python:3.14.0a6-alpine3.21
 
 RUN apk add --no-cache git
@@ -14,3 +16,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # copy project
 COPY . .
+
+CMD [ "sleep infinity" ]
