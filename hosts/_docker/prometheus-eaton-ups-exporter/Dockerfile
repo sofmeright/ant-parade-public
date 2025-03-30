@@ -4,7 +4,7 @@ FROM python:3.14.0a6-alpine3.21
 
 RUN apk add --no-cache git
 RUN apk add --no-cache openssh
-RUN apk add --no-cache sleep
+RUN apk add --no-cache coreutils
     
 RUN wget https://github.com/psyinfra/prometheus-eaton-ups-exporter/archive/refs/tags/v1.2.0.zip
 RUN unzip v1.2.0.zip
