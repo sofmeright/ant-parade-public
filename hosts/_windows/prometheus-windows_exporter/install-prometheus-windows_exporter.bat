@@ -2,6 +2,7 @@
 
 :: Syntax is as follows:
 :: install-prometheus-windows_exporter.bat [DESTINATION_PATH] [PROMETHEUS_VERSION]
+:: This script requires in tacticalrmm an environmental variable of "password={{global.Windows_Admin_Pass}}" to be set and the value entered in tacticalrmm settings in a global variable.
 
 :: Check if a path is provided as an argument, otherwise use the default.
 if "%1" == "" (
