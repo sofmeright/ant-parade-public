@@ -38,8 +38,8 @@
   </Settings>
   <Actions Context="Author">
     <Exec>
-      <Command>C:\_Staging\_Toolchest\prometheus_windows_exporter\prometheus-windows_exporter.exe</Command>
-      <WorkingDirectory>C:\_Staging\_Toolchest\prometheus_windows_exporter\</WorkingDirectory>
+      <Command>C:\_Staging\_Toolchest\prometheus-windows_exporter\prometheus-windows_exporter.exe</Command>
+      <WorkingDirectory>C:\_Staging\_Toolchest\prometheus-windows_exporter\</WorkingDirectory>
     </Exec>
   </Actions>
 </Task>
