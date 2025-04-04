@@ -1,11 +1,11 @@
 @echo off
 
 :: Syntax is as follows:
-:: install_prometheus_windows_exporter.bat [DESTINATION_PATH] [PROMETHEUS_VERSION]
+:: install-prometheus-windows_exporter.bat [DESTINATION_PATH] [PROMETHEUS_VERSION]
 
 :: Check if a path is provided as an argument, otherwise use the default.
 if "%1" == "" (
-    set DESTINATION_PATH=C:\_Staging\_Toolchest\prometheus_windows_exporter
+    set DESTINATION_PATH=C:\_Staging\_Toolchest\prometheus-windows_exporter
 ) else (
     set DESTINATION_PATH=%1
 )
@@ -23,10 +23,12 @@ set DOWNLOAD_URL=https://github.com/prometheus-community/windows_exporter/releas
 powershell -Command "New-Item -Path '%DESTINATION_PATH%' -ItemType Directory -Force"
 
 :: Download Windows Exporter executable to C:\_Staging\_Toolchest directory
-powershell -Command "Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%DESTINATION_PATH%\prometheus_windows_exporter.exe'"
+powershell -Command "Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%DESTINATION_PATH%\prometheus-windows_exporter.exe'"
 
 echo Done! Prometheus Windows Exporter version %PROMETHEUS_VERSION% has been downloaded and saved in the %DESTINATION_PATH% directory.
 
 :: Add a task to Task Scheduler
-powershell -Command "Register-ScheduledTask -xml (Get-Content '%DESTINATION_PATH%\prometheus-windows-exporter.xml' | Out-String) -TaskName 'prometheus-windows-exporter' -TaskPath '\SoFMeRight' -User kaiha -Password %password%"
-powershell -Command "Start-ScheduledTask -TaskName \SoFMeRight\prometheus-windows-exporter"
+set DOWNLOAD_URL_TASK_SCHEDULER=https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_windows/prometheus-windows_exporter/prometheus-windows_exporter.xml?inline=false
+powershell -Command "Invoke-WebRequest -Uri '%DOWNLOAD_URL_TASK_SCHEDULER%' -OutFile '%DESTINATION_PATH%\prometheus-windows_exporter.xml'"
+powershell -Command "Register-ScheduledTask -xml (Get-Content '%DESTINATION_PATH%\prometheus-windows_exporter.xml' | Out-String) -TaskName 'prometheus-windows_exporter' -TaskPath '\SoFMeRight' -User kaiha -Password %password%"
+powershell -Command "Start-ScheduledTask -TaskName \SoFMeRight\prometheus-windows_exporter"
