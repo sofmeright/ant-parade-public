@@ -7,5 +7,5 @@
     - name: deploy Docker Compose stack
       community.docker.docker_compose_v2:
         project_name: portainer
-        project_src: docker-compose.yaml
+        project_src: /mnt/app_data/Server/_docker_stack/portainer/docker-compose.yaml
         recreate: always
