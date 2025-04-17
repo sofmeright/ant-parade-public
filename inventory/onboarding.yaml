@@ -106,7 +106,6 @@ windows_11:
 
 linux:
   children:
-    debian_12:
     ubuntu:
     proxmox:
     ansible:
