@@ -30,7 +30,7 @@
 
 
 - name: Prepare localhost for Ansible usage 3/3 - Copying ssh public key to remote host.
-  hosts: linux
+  hosts: linux,!localhost
   gather_facts: false
   become: true
   tasks:
