@@ -38,5 +38,5 @@
       ansible.posix.authorized_key:
         user: "{{ ansible_ssh_user }}"
         state: present
-        key: "{{ lookup('file', '/root/.ssh/id_dsa.pub') }}"
+        key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
       become: true
