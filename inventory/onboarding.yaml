@@ -36,6 +36,10 @@ k8s_worker:
       ansible_host: 172.22.22.178
     dungeon_worker_005:
       ansible_host: 172.22.22.179
+debian_12:
+  hosts:
+    Harbormaster:
+      ansible_host: 10.24.7.55
 ubuntu_24_04:
   children:
     ansible:
@@ -79,6 +83,7 @@ ubuntu_24_04:
 
 ubuntu:
   children:
+    debian_12:
     ubuntu_24_04:
   vars:
     ansible_user: kai
@@ -101,6 +106,7 @@ windows_11:
 
 linux:
   children:
+    debian_12:
     ubuntu:
     proxmox:
     ansible:
