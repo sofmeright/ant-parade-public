@@ -56,7 +56,7 @@ ubuntu_24_04:
       ansible_host: 10.55.6.136
 #    edgetrimmer:
 #      ansible_host: 172.22.22.54
-    Harbormaster:
+    harbormaster:
       ansible_host: 10.24.7.55
     homing-pigeon:
       ansible_host: 10.0.0.2
