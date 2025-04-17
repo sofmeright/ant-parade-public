@@ -41,5 +41,5 @@
         state: present
         key: "{{ lookup('file', item) }}"
       with_fileglob:
-        - id_dsa.pub
+        - id_rsa.pub
       become: true
