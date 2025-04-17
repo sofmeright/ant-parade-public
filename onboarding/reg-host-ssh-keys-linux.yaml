@@ -20,6 +20,7 @@
   hosts: linux
   tasks:
     - name: loop over hosts and append to known_hosts
+      ignore_errors: true
       remote_user: "{{ ansible_ssh_user }}"
       become: true
       become_method: sudo
