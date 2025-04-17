@@ -34,12 +34,9 @@
   gather_facts: false
   become: true
   tasks:
-    - name: Copying ssh public key to remote host.
-      remote_user: "{{ ansible_ssh_user }}"
-      authorized_key:
+    - name: Set authorized key taken from file
+      ansible.posix.authorized_key:
         user: "{{ ansible_ssh_user }}"
         state: present
         key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
-      with_fileglob:
-        - id_rsa.pub
       become: true
