@@ -17,10 +17,9 @@
         generate_ssh_key: yes
         
 - name: Prepare localhost for Ansible usage 2/3 - Add hosts fingerprints
-  hosts: linux
+  hosts: linux,!localhost
   tasks:
     - name: loop over hosts and append to known_hosts
-      ignore_errors: true
       remote_user: "{{ ansible_ssh_user }}"
       become: true
       become_method: sudo
