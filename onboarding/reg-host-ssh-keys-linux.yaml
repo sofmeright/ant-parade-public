@@ -39,7 +39,7 @@
       authorized_key:
         user: "{{ ansible_ssh_user }}"
         state: present
-        key: "{{ lookup('file', item) }}"
+        key: "{{ lookup('file', '/root/.ssh/id_rsa') }}"
       with_fileglob:
         - id_rsa.pub
       become: true
