@@ -66,26 +66,26 @@ debian_12:
       ansible_host: 10.24.7.55
 ubuntu_24_04_unclustered:
   hosts:
-    auger:
-      ansible_host: 172.22.22.50
-    bowrake:
-      ansible_host: 172.22.22.51
-    caterpillarinc:
-      ansible_host: 172.22.22.52
+#    auger:
+#      ansible_host: 172.22.22.50
+#    bowrake:
+#      ansible_host: 172.22.22.51
+#    caterpillarinc:
+#      ansible_host: 172.22.22.52
     cell-membrane:
       ansible_host: 10.40.9.104
-    dibbler:
-      ansible_host: 172.22.22.53
+#    dibbler:
+#      ansible_host: 172.22.22.53
     dock:
       ansible_host: 10.55.6.136
-    edgetrimmer:
-      ansible_host: 172.22.22.54
+#    edgetrimmer:
+#      ansible_host: 172.22.22.54
     homing-pigeon:
       ansible_host: 10.0.0.2
     jabu-jabu:
       ansible_host: 10.30.8.98
-    jalapeno:
-      ansible_host: 10.13.37.25
+#    jalapeno:
+#      ansible_host: 10.13.37.25
     marina:
       ansible_host: 10.55.6.123
     moor:
