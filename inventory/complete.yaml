@@ -60,6 +60,10 @@ windows_11:
       ansible_host: 10.13.37.144
     WaterLily:
       ansible_host: 10.13.37.142
+debian_12:
+  hosts:
+    Harbormaster:
+      ansible_host: 10.24.7.55
 ubuntu_24_04_unclustered:
   hosts:
     auger:
@@ -106,6 +110,7 @@ ubuntu_24_04:
 linux:
   children:
     ansible:
+    debian_12:
     k8s_master:
     k8s_worker:
     proxmox:
@@ -118,11 +123,13 @@ linux_clustered:
     proxmox:
 linux_unclustered:
   children:
+    debian_12:
     proxmox_bs:
     ubuntu_24_04_unclustered:
 proxmox_vms:
   children:
     ansible:
+    debian_12:
     k8s_master:
     k8s_worker:
     proxmox_bs:
