@@ -12,9 +12,9 @@
       - zsh
       state: present
       update_cache: yes # Simulate apt-update on the first run.
-  #- name: Stage 2/5 - Remove oh my zsh prior to reinstall.
-    #ansible.builtin.shell: 'rm -r /home/{{ ansible_user_id }}/powerlevel10k' # 'rm -r /root/.oh-my-zsh && mkdir /home/{{ ansible_user_id }}/.oh-my-zsh' # && uninstall_oh_my_zsh
-    #ignore_errors: true
+  - name: Stage 2/5 - Remove oh my zsh prior to reinstall.
+    ansible.builtin.shell: mkdir /home/{{ ansible_user_id }}/ #'rm -r /home/{{ ansible_user_id }}/powerlevel10k' # 'rm -r /root/.oh-my-zsh && mkdir /home/{{ ansible_user_id }}/.oh-my-zsh' # && uninstall_oh_my_zsh
+    ignore_errors: true
   - name: Stage 4/5 - Transfer preferred config for zsh.
     ansible.builtin.get_url:
       url: https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_linux/oh-my-zsh/.zshrc
