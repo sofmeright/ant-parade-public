@@ -1,6 +1,6 @@
 ---
 - name: Installing oh my zsh shell and powerlevel10k.
-  hosts: linux
+  hosts: ubuntu_24_04
   become: true
   tasks: 
   - name: Stage 1/5 - Installing zsh and dependencies - git-core, curl, fonts-powerline.
