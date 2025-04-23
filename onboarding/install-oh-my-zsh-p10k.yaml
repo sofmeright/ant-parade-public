@@ -27,4 +27,4 @@
       owner: '{{ ansible_user_id }}'
       group: '{{ ansible_user_id }}'
   - name: Stage IV of IV - (Attempt) Install the oh-my-zsh plugin.
-    ansible.builtin.shell: sh -c $(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)
+    ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
