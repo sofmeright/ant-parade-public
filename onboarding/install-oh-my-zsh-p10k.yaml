@@ -3,19 +3,19 @@
   hosts: linux
   become: true
   tasks: 
-    - name: Installing zsh and dependencies (git-core, curl, fonts-powerline).
-      apt:
-        name:
-          - git-core 
-          - curl 
-          - fonts-powerline
-          - zsh
-        state: present
-      update_cache: yes # Simulate apt-update on the first run.
-    - name: Download the powerlevel10k config.
-      - get_url:
-        url: https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_linux/oh-my-zsh/.p10k.zsh
-        dest: ~/.p10k.zsh
-        mode: '0664'
-    - name: (Attempt) Install the oh-my-zsh plugin.
-      ansible.builtin.command: sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  - name: Installing zsh and dependencies (git-core, curl, fonts-powerline).
+    apt:
+      name:
+      - git-core 
+      - curl 
+      - fonts-powerline
+      - zsh
+    state: present
+    update_cache: yes # Simulate apt-update on the first run.
+  - name: Download the powerlevel10k config.
+    - get_url:
+      url: https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_linux/oh-my-zsh/.p10k.zsh
+      dest: ~/.p10k.zsh
+      mode: '0664'
+  - name: (Attempt) Install the oh-my-zsh plugin.
+    ansible.builtin.command: sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
