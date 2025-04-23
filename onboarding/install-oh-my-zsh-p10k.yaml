@@ -1,0 +1,12 @@
+--
+
+- name: Phase I of I: Installing zsh.
+  hosts: linux
+  become: true
+  tasks: 
+  - name: Installing zsh.
+    apt:
+      name:
+        - zsh
+      state: present
+      update_cache: yes # Simulate apt-update on the first run.
