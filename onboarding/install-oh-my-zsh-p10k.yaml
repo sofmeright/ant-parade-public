@@ -3,7 +3,7 @@
   hosts: linux
   become: true
   tasks: 
-  - name: Installing zsh and dependencies; git-core, curl, fonts-powerline.
+  - name: Installing zsh and dependencies - git-core, curl, fonts-powerline.
     apt:
       name:
       - git-core 
