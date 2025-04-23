@@ -25,7 +25,7 @@
   - name: Clone a repo with separate git directory
     ansible.builtin.git:
       repo: 'https://github.com/romkatv/powerlevel10k.git'
-      dest: /home/{{ ansible_user_id }}/powerlevel10k
+      dest: /home/{{ ansible_user_id }}/.oh-my-zsh/custom/themes/powerlevel10k
       depth: 1
   - name: Stage 5/5 - Transfer preferred config for powerlevel10k.
     ansible.builtin.get_url:
