@@ -7,7 +7,7 @@
   - name: Installing zsh and dependencies (git-core, curl, fonts-powerline).
     apt:
       name:
-        -git-core 
+        - git-core 
         - curl 
         - fonts-powerline
         - zsh
