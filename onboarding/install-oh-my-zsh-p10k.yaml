@@ -18,4 +18,4 @@
       dest: ~/.p10k.zsh
       mode: '0664'
   - name: (Attempt) Install the oh-my-zsh plugin.
-    ansible.builtin.shell: $(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)
+    ansible.builtin.shell: sh -c $(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)
