@@ -12,17 +12,17 @@
       - zsh
       state: present
       update_cache: yes # Simulate apt-update on the first run.
-  - name: Stage 2/5 - (Attempt) Install the oh-my-zsh plugin.
+  - name: Stage 2/5 - Remove oh my zsh prior to reinstall.
+    ansible.builtin.shell: sudo rm -r /root/.oh-my-zsh && uninstall_oh_my_zsh
+  - name: Stage 3/5 - (Attempt) Install the oh-my-zsh plugin.
     ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-  - name: Stage 3/5 - Transfer preferred config for zsh.
+  - name: Stage 4/5 - Transfer preferred config for zsh.
     ansible.builtin.get_url:
       url: https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_linux/oh-my-zsh/.zshrc
       dest: /home/{{ ansible_user_id }}/.zshrc
       mode: '0664'
       owner: '{{ ansible_user_id }}'
       group: '{{ ansible_user_id }}'
-  - name: Stage 4/5 - Remove oh my zsh prior to reinstall.
-    ansible.builtin.shell: sudo rm -r /root/.oh-my-zsh && uninstall_oh_my_zsh
   - name: Stage 5/5 - Transfer preferred config for powerlevel10k.
     ansible.builtin.get_url:
       url: https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_linux/oh-my-zsh/.p10k.zsh
