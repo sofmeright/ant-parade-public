@@ -1,4 +1,4 @@
---
+---
 - name: Phase I of I - Installing zsh.
   hosts: linux
   become: true
