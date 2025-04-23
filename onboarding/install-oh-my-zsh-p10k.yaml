@@ -15,7 +15,7 @@
   - name: Stage 2/5 - Remove oh my zsh prior to reinstall.
     ansible.builtin.shell: 'rm -r /root/.oh-my-zsh && mkdir /home/{{ ansible_user_id }}/.oh-my-zsh' # && uninstall_oh_my_zsh
   - name: Stage 3/5 - (Attempt) Install the oh-my-zsh plugin.
-    ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    ansible.builtin.shell: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended'
   - name: Stage 4/5 - Transfer preferred sh script for oh my zsh.
     ansible.builtin.get_url:
       url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/oh-my-zsh.sh
