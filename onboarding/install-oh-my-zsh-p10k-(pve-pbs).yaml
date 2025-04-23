@@ -20,8 +20,8 @@
       url: https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_linux/oh-my-zsh/.zshrc
       dest: /root/.zshrc
       mode: '0664'
-      owner: '{{ ansible_user_id }}'
-      group: '{{ ansible_user_id }}'
+      owner: 'root'
+      group: 'root'
   - name: Clone a repo with separate git directory
     ansible.builtin.git:
       repo: 'https://github.com/romkatv/powerlevel10k.git'
@@ -32,5 +32,5 @@
       url: https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_linux/oh-my-zsh/.p10k.zsh
       dest: /root/.p10k.zsh
       mode: '0664'
-      owner: '{{ ansible_user_id }}'
-      group: '{{ ansible_user_id }}'
+      owner: 'root'
+      group: 'root'
