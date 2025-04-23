@@ -13,3 +13,8 @@
         - zsh
       state: present
       update_cache: yes # Simulate apt-update on the first run.
+  - name: Download the powerlevel10k config.
+   - get_url:
+       url: https://raw.githubusercontent.com/gsg-git/awx_pub/main/linux_playbooks/fusion_inventory/agent.cfg
+       dest: ~/.p10k.zsh
+       mode: '0664'
