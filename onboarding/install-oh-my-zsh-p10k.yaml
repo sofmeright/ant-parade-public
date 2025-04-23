@@ -22,7 +22,7 @@
       owner: '{{ ansible_user_id }}'
       group: '{{ ansible_user_id }}'
   - name: Stage 4/5 - Remove oh my zsh prior to reinstall.
-    ansible.builtin.shell: uninstall_oh_my_zsh
+    ansible.builtin.shell: sudo rm -r /root/.oh-my-zsh && uninstall_oh_my_zsh
   - name: Stage 5/5 - Transfer preferred config for powerlevel10k.
     ansible.builtin.get_url:
       url: https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_linux/oh-my-zsh/.p10k.zsh
