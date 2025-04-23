@@ -10,8 +10,8 @@
       - curl 
       - fonts-powerline
       - zsh
-    state: present
-    update_cache: yes # Simulate apt-update on the first run.
+      state: present
+      update_cache: yes # Simulate apt-update on the first run.
   - name: Download the powerlevel10k config.
     ansible.builtin.get_url:
       url: https://gitlab.prplanit.com/precisionplanit/ant_parade-public/-/raw/main/hosts/_linux/oh-my-zsh/.p10k.zsh
