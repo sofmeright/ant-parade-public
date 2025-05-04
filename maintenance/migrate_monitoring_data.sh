@@ -1,4 +1,5 @@
 # This script pulls data from the source to the new monitoring stack location.
+sudo rsync -avz kai@moor:/mnt/app_data/Server/_docker_stack/beszel /mnt/app_data/Server/_docker_stack/beszel
 sudo rsync -avz kai@moor:/mnt/app_data/Server/_docker_stack/grafana /mnt/app_data/Server/_docker_stack/grafana
 sudo rsync -avz kai@moor:/mnt/app_data/Server/_docker_stack/graphite-exporter /mnt/app_data/Server/_docker_stack/graphite-exporter
 sudo rsync -avz kai@moor:/mnt/app_data/Server/_docker_stack/loki /mnt/app_data/Server/_docker_stack/loki
