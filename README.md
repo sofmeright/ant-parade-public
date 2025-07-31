@@ -37,7 +37,7 @@ We use [Ansible](https://www.ansible.com/) with playbooks stored in this repo an
 
 - 🔐 [Ansible Semaphore](https://ansible-semaphore.com/) — for web-based job triggering
 - 🐳 GitLab CI/CD Components — for automated GitOps-style deployments
-- 💡 *Ideas in progress*: OliveTin, or Cronguru for task selection.
+- 💡 *Ideas in progress*: OliveTin, or Cronguru for task selection. Docker deployment script in progress, plannint to use SOPs to encrypt docker secrets inline.
 
 ### 🗄️ Repository Recovery
 
