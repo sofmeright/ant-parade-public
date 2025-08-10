@@ -290,9 +290,9 @@ function Manage-Service {
 
 function Get-UserInput {
     if (-not $Version) {
-        Write-Host "`nAvailable versions can be found at:"
-        Write-Host "GitHub: https://github.com/henrygd/beszel/releases" -ForegroundColor Cyan
-        Write-Host "GitLab: $GITLAB_DOMAIN/precisionplanit/beszel-agent-win-amd64/-/releases" -ForegroundColor Cyan
+        Write-Host "`nAvailable Beszel versions can be found at:" -ForegroundColor Yellow
+        Write-Host "GitHub: https://github.com/henrygd/beszel/releases" -ForegroundColor Green
+        Write-Host "GitLab: $GITLAB_DOMAIN/precisionplanit/beszel-agent-win-amd64/-/releases" -ForegroundColor Green
         Write-Host ""
         $Version = Read-Host "Enter version to install (default: v0.12.3)"
         
@@ -332,7 +332,12 @@ function Get-UserInput {
 
 # Main execution
 try {
-    Write-Header "Beszel Agent Installer/Updater"
+    Write-Host ""
+    Write-Host "Beszel Agent Installer/Updater (Provided by SoFMeRight of PrecisionPlanIT)" -ForegroundColor Green
+    Write-Host "You can find my other promoted projects:" -ForegroundColor Yellow
+    Write-Host "  GitHub: https://github.com/sofmeright" -ForegroundColor Green
+    Write-Host "  Docker Hub: https://hub.docker.com/u/prplanit" -ForegroundColor Green
+    Write-Host ""
     
     # Check if running as admin
     if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
