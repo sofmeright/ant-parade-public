@@ -4,6 +4,13 @@
 
 set -e
 
+echo ""
+echo "Beszel Agent Installer/Updater (Provided by SoFMeRight of PrecisionPlanIT)"
+echo "You can find my other promoted projects:"
+echo "  GitHub: https://github.com/sofmeright"
+echo "  Docker Hub: https://hub.docker.com/u/prplanit"
+echo ""
+
 SERVICE_NAME="beszel_agent"
 INSTALL_DIR="/usr/local/sbin"
 RC_DIR="/usr/local/etc/rc.d"
