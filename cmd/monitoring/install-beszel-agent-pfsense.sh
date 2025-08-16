@@ -114,6 +114,9 @@ else
   echo "Warning: No public key provided. Please set 'beszel_agent_key' in /etc/rc.conf manually."
 fi
 
+echo "Installing $SERVICE_NAME service..."
+service "$SERVICE_NAME" enable
+
 echo "Starting $SERVICE_NAME service..."
 service "$SERVICE_NAME" start
 
