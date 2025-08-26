@@ -4,6 +4,7 @@
 # Works on OPNsense live or installed. Live boots won't persist across reboot.
 
 set -e
+umask 022
 
 echo ""
 echo "Beszel Agent Installer/Updater (Provided by SoFMeRight of PrecisionPlanIT)"
@@ -16,6 +17,7 @@ SERVICE_NAME="beszel_agent"
 INSTALL_DIR="/usr/local/sbin"
 RC_DIR="/usr/local/etc/rc.d"
 LOG_FILE="/var/log/${SERVICE_NAME}.log"
+PID_FILE="/var/run/${SERVICE_NAME}.pid"
 TMP_DIR="$(mktemp -d -t beszel-agent-install-XXXXXXXX)"
 KEY="${2:-}"
 VERSION="${1:-}"
@@ -71,21 +73,42 @@ load_rc_config "$name"
 : ${beszel_agent_flags:=""}
 
 pidfile="/var/run/${name}.pid"
-agent_bin="/usr/local/sbin/${name}"
+command="/usr/local/sbin/${name}"
+procname="${command}"
 logfile="/var/log/${name}.log"
 
-# Track the daemon(8) wrapper; quote KEY to preserve spaces in the public key
-command="/usr/sbin/daemon"
-procname="/usr/sbin/daemon"
-command_args="-p ${pidfile} -o ${logfile} -- /usr/bin/env KEY=\"${beszel_agent_key}\" ${agent_bin} ${beszel_agent_flags}"
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+status_cmd="${name}_status"
 
-start_precmd="${name}_precmd"
-
-beszel_agent_precmd() {
+beszel_agent_start() {
   if [ -z "${beszel_agent_key}" ]; then
     echo "Error: beszel_agent_key not set in rc.conf"
     return 1
   fi
+  echo "Starting ${name}..."
+  # Run in background, persist PID, and log stdout/stderr
+  /usr/bin/nohup /usr/bin/env KEY="${beszel_agent_key}" "${command}" ${beszel_agent_flags} \
+    >> "${logfile}" 2>&1 &
+  echo $! > "${pidfile}"
+}
+
+beszel_agent_stop() {
+  echo "Stopping ${name}..."
+  if [ -f "${pidfile}" ]; then
+    kill "$(cat "${pidfile}")" && rm -f "${pidfile}"
+  else
+    echo "No PID file found."
+  fi
+}
+
+beszel_agent_status() {
+  if [ -f "${pidfile}" ] && kill -0 "$(cat "${pidfile}")" 2>/dev/null; then
+    echo "${name} is running as pid $(cat "${pidfile}")"
+    return 0
+  fi
+  echo "${name} is not running."
+  return 1
 }
 
 run_rc_command "$1"
@@ -94,25 +117,29 @@ EOF
 chmod 755 "$RC_DIR/$SERVICE_NAME"
 
 echo "Enabling ${SERVICE_NAME} service..."
-sysrc -f /etc/rc.conf "${SERVICE_NAME}_enable=YES" >/dev/null
+sysrc -f /etc/rc.conf ${SERVICE_NAME}_enable=YES >/dev/null
 
 if [ -n "$KEY" ]; then
-  # Quote whole var=value so spaces are preserved in rc.conf
-  sysrc -f /etc/rc.conf "${SERVICE_NAME}_key=${KEY}" >/dev/null
+  # CRITICAL: quote the value so spaces in the key are preserved in rc.conf
+  sysrc -f /etc/rc.conf ${SERVICE_NAME}_key="$KEY" >/dev/null
 else
   echo "Warning: No public key provided. Set it later with:"
-  echo "  sysrc ${SERVICE_NAME}_key=\"ssh-ed25519 AAAA...\""
+  echo "  sysrc ${SERVICE_NAME}_key=\"ssh-ed25519 AAAA... your@host\""
 fi
+
+# Touch log file so it exists with sane perms
+: > "$LOG_FILE" || true
+chmod 644 "$LOG_FILE" 2>/dev/null || true
 
 echo "Starting ${SERVICE_NAME}..."
 service "${SERVICE_NAME}" start || true
 
-# Verify running state (daemon writes pidfile we track)
+# Verify running state via our pidfile-based status
 if service "${SERVICE_NAME}" status >/dev/null 2>&1; then
   echo "Beszel Agent ${VERSION} installed and started successfully!"
   echo "Manage it with: service ${SERVICE_NAME} {start|stop|restart|status}"
 else
-  echo "Service did not report as running. Showing recent log (if any):"
+  echo "Service did not report as running. Recent log (if any):"
   tail -n 200 "$LOG_FILE" 2>/dev/null || echo "No log at $LOG_FILE yet."
   echo "Manual start for diagnostics:"
   echo "  env KEY=\"<your-key>\" ${INSTALL_DIR}/${SERVICE_NAME} >${LOG_FILE} 2>&1 &"
