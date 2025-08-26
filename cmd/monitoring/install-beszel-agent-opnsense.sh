@@ -1,7 +1,7 @@
 #!/bin/sh
 # install-beszel-agent-opnsense.sh
 # Usage: sh install-beszel-agent-opnsense.sh v0.12.3 "ssh-ed25519 AAAA... your@host"
-# Notes: Works on OPNsense live or installed. Live boots won't persist across reboot.
+# Works on OPNsense live or installed. Live boots won't persist across reboot.
 
 set -e
 
@@ -28,7 +28,6 @@ if [ -z "$VERSION" ]; then
   exit 1
 fi
 
-# Choose archive (default to amd64; expand mapping if you need arm later)
 TARBALL="beszel-agent_freebsd_amd64.tar.gz"
 URL="https://github.com/henrygd/beszel/releases/download/$VERSION/$TARBALL"
 
@@ -73,11 +72,12 @@ load_rc_config "$name"
 
 pidfile="/var/run/${name}.pid"
 agent_bin="/usr/local/sbin/${name}"
+logfile="/var/log/${name}.log"
 
-# We wrap the agent with daemon(8) and track daemon's PID in pidfile
+# Track the daemon(8) wrapper; quote KEY to preserve spaces in the public key
 command="/usr/sbin/daemon"
 procname="/usr/sbin/daemon"
-command_args="-p ${pidfile} -o /var/log/${name}.log /usr/bin/env KEY=${beszel_agent_key} ${agent_bin} ${beszel_agent_flags}"
+command_args="-p ${pidfile} -o ${logfile} -- /usr/bin/env KEY=\"${beszel_agent_key}\" ${agent_bin} ${beszel_agent_flags}"
 
 start_precmd="${name}_precmd"
 
@@ -97,6 +97,7 @@ echo "Enabling ${SERVICE_NAME} service..."
 sysrc -f /etc/rc.conf "${SERVICE_NAME}_enable=YES" >/dev/null
 
 if [ -n "$KEY" ]; then
+  # Quote whole var=value so spaces are preserved in rc.conf
   sysrc -f /etc/rc.conf "${SERVICE_NAME}_key=${KEY}" >/dev/null
 else
   echo "Warning: No public key provided. Set it later with:"
@@ -106,14 +107,14 @@ fi
 echo "Starting ${SERVICE_NAME}..."
 service "${SERVICE_NAME}" start || true
 
-# Verify running state in a way compatible with rc.subr/daemon pidfile
+# Verify running state (daemon writes pidfile we track)
 if service "${SERVICE_NAME}" status >/dev/null 2>&1; then
   echo "Beszel Agent ${VERSION} installed and started successfully!"
   echo "Manage it with: service ${SERVICE_NAME} {start|stop|restart|status}"
 else
   echo "Service did not report as running. Showing recent log (if any):"
   tail -n 200 "$LOG_FILE" 2>/dev/null || echo "No log at $LOG_FILE yet."
-  echo "You can try manual start for diagnostics:"
-  echo "  env KEY=\"<your-key>\" ${INSTALL_DIR}/${SERVICE_NAME} >/var/log/${SERVICE_NAME}.log 2>&1 &"
+  echo "Manual start for diagnostics:"
+  echo "  env KEY=\"<your-key>\" ${INSTALL_DIR}/${SERVICE_NAME} >${LOG_FILE} 2>&1 &"
   exit 1
 fi
